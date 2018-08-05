@@ -1,0 +1,5 @@
+{
+    "require": {
+        "marcl/amazonproductapi": "^3.0"
+    }
+}

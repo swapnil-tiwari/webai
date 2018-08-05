@@ -1,0 +1,12 @@
+function scrap({main,price,name,picture})
+{
+	var list=document.querySelectorAll(main);
+	var AllObjects=[]
+	for(var each of list)
+    {
+		AllObjects.push(new item(each))
+	}
+	return AllObjects
+	
+}
+s=scrap({main:'.s-result-item',name:'h2',price:'.currencyINR',picture:'img'})
