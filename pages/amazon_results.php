@@ -14,35 +14,43 @@ $document->loadHTML($html_amazon);
 libxml_clear_errors();
 class item
 {
-  function __construct($name,$price,$pic) {
+  function __construct($name,$price,$pic,$link) {
     $this->title=$name;
     $this->price=$price;
     $this->picture=$pic;
+    $this->item_link=$link;
   }
 }
-  function scrap($dom,$main,$name,$price,$pic0)
+  function scrap($dom,$main,$name,$price)
   {
      $xDom=new DOMXPath($dom);
      $list=$xDom->query("//*[contains(@class, '$main')]");
      $AllObjects=array();
      foreach ($list as $each) {
 
+      
         $title=$each->getElementsByTagName($name)->item(0)->nodeValue;
         $pric=$xDom->query(".//*[contains(@class, '$price')]",$each)->item(0)->parentNode->nodeValue;
-        $pic=$each->getElementsByTagName($pic0)->item(0)->getAttribute('src');
-        array_push($AllObjects,new item($title,$pric,$pic));
+        //$pic=$each->getElementsByTagName('img')->item(0)->getAttribute('src');
+       // var_dump($each->getElementsByTagName('img')->item(0));
+       // echo "<br>";
+        //$link_returned=$each->getElementsByTagName('a')->item(0)->getAttribute('href');
+        //echo $link_returned."<br>";
+        array_push($AllObjects,new item($title,$pric,$pic,$link_returned));
+      
+      
      }
      return $AllObjects;
   }
   $content='<tr><th>Amazon-Items</th><th>Price</th><th>Image</th> </tr>';
-  foreach (scrap($document,'s-result-item','h2','currencyINR','img') as $each) {
+  foreach (scrap($document,'s-result-item','h2','currencyINR') as $each) {
           $content.='<tr>
-        <td>'.$each->title.'
+        <td><a href="'.$each->item_link.'" class="items_link">'.$each->title.'
         </td>
-        <td>&#8377;'.$each->price.'
+        <td><b>&#8377;'.$each->price.'</b>
         </td>
         <td>
-          <img src='.$each->picture.'  />
+          <img src="'.$each->picture.'" class="items_img" />
         </td>
         </tr>
         ';
