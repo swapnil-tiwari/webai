@@ -5,7 +5,7 @@ function scrap({main,price,name,picture})
 	for(var each of list)
     {
 		AllObjects.push(new item(each))
-	}
+    }
 	return AllObjects
 	
 }
